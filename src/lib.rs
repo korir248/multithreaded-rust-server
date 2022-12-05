@@ -1,5 +1,6 @@
 use std::{thread::{JoinHandle, self}, sync::{mpsc, Arc, Mutex}};
 
+#[allow(dead_code)]
 pub struct ThreadPool {
     workers: Vec<Worker>,
     sender: mpsc::Sender<Job>,
@@ -29,9 +30,11 @@ impl ThreadPool {
     pub fn execute<F>(&self, f : F) where F: FnOnce() + Send + 'static{
         let job = Box::new(f);
 
-        self.sender.send(job).unwrap();    }
+        self.sender.send(job).unwrap();    
+    }
 }
 
+#[allow(dead_code)]
  struct Worker {
     id: usize,
     thread: JoinHandle<()>
